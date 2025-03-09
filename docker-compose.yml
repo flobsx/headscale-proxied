@@ -9,7 +9,7 @@ services:
     volumes:
       # - ./headscale/config:/etc/headscale
       # - ./headscale/data:/var/lib/headscale
-      - headscale_config:/etc/headscale
+      - ./headscale/config:/etc/headscale
       - headscale_data:/var/lib/headscale
     command: serve
     networks:
@@ -37,7 +37,6 @@ services:
 volumes:
   caddy_data:
   caddy_config:
-  headscale_config:
   headscale_data:
 
 networks:
