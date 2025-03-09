@@ -12,13 +12,15 @@ services:
       - ./headscale:/etc/headscale
       - headscale_data:/var/lib/headscale
     command: serve
-    networks: caddy_nw
+    networks:
+      - caddy_nw
 
   headscale-ui:
     container_name: headscale-ui
     image: ghcr.io/gurucomputing/headscale-ui:latest
     restart: unless-stopped
-    networks: caddy_nw
+    networks:
+      - caddy_nw
 
   caddy:
     image: caddy
