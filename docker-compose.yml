@@ -1,59 +1,29 @@
 services:
-  headscale:
-    image: headscale/headscale:0.25.1
-    restart: unless-stopped
-    container_name: headscale
-    ports:
-      - "9090:9090"
-    expose:
-      - "8080"
-    volumes:
-      - ./headscale/config:/etc/headscale  # Configuration files
-      - ./headscale/data:/var/lib/headscale # Data persistence
-    command: serve
+  # headscale:
+  #   image: headscale/headscale:0.25.1
+  #   restart: unless-stopped
+  #   container_name: headscale
+  #   ports:
+  #     - "9090:9090"
+  #   expose:
+  #     - "8080"
+  #   volumes:
+  #     - ./headscale/config:/etc/headscale  # Configuration files
+  #     - ./headscale/data:/var/lib/headscale # Data persistence
+  #   command: serve
+  #   networks:
+  #     - headscale-proxied_default
+  #   depends_on:
+  #     - nginx-proxy-manager
+
+  caddy:
+    image: caddy
+    ports: 
+      - "80:80"
+      - "443:443"
     networks:
-      - headscale-proxied_default
-    depends_on:
-      - nginx-proxy-manager
-
-  nginx-proxy-manager:
-    image: 'jc21/nginx-proxy-manager:latest'
-    restart: unless-stopped
-    ports:
-      - '80:80'    # Public HTTP Port
-      - '443:443'  # Public HTTPS Port
-      - '81:81'    # Admin Web Port
-    #expose:
-    #  - "81"
-    environment:
-      DB_MYSQL_HOST: "db"
-      DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: "npm"
-      DB_MYSQL_PASSWORD: "npm"
-      DB_MYSQL_NAME: "npm"
+      - caddy-net
     volumes:
-      - ./nginx-proxy-manager/data:/data
-      - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt
-    depends_on:
-      - db
-    # networks:
-    #   - headscale-proxied_default
-    #   - default
-
-  db:
-    image: 'jc21/mariadb-aria:latest'
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: 'npm'
-      MYSQL_DATABASE: 'npm'
-      MYSQL_USER: 'npm'
-      MYSQL_PASSWORD: 'npm'
-    volumes:
-      - ./nginx-proxy-manager/mysql:/var/lib/mysql
-    # networks:
-    #   - headscale-proxied_default
-
-networks:
-  headscale-proxied_default:
-    name: proxied
-    external: true
+      - ./caddy/data/:/data/
+      - ./caddy/config/:/config/
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
