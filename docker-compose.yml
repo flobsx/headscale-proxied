@@ -7,8 +7,10 @@ services:
       #- "0.0.0.0:8080:8080"
       - "127.0.0.1:9090:9090"
     volumes:
-      - ./headscale/config:/etc/headscale
-      - ./headscale/data:/var/lib/headscale # Data persistence
+      # - ./headscale/config:/etc/headscale
+      # - ./headscale/data:/var/lib/headscale
+      - headscale-config:/etc/headscale
+      - headscale-data:/var/lib/headscale
     command: serve
     networks:
       headscale-proxied_default:
@@ -35,6 +37,8 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+  headscale_config:
+  headscale_data:
 
 networks:
   headscale-proxied_default:
