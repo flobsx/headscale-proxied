@@ -12,7 +12,7 @@ services:
       - ./headscale/data:/var/lib/headscale # Data persistence
     command: serve
     networks:
-      - proxied
+      - headscale-proxied_default
     depends_on:
       - nginx-proxy-manager
 
@@ -36,9 +36,9 @@ services:
       - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt
     depends_on:
       - db
-    networks:
-      - proxied
-      - default
+    # networks:
+    #   - headscale-proxied_default
+    #   - default
 
   db:
     image: 'jc21/mariadb-aria:latest'
@@ -50,10 +50,10 @@ services:
       MYSQL_PASSWORD: 'npm'
     volumes:
       - ./nginx-proxy-manager/mysql:/var/lib/mysql
-    networks:
-      - proxied
+    # networks:
+    #   - headscale-proxied_default
 
 networks:
-  proxied:
+  headscale-proxied_default:
     name: proxied
     external: true
