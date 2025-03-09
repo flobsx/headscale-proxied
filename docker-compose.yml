@@ -9,18 +9,16 @@ services:
     volumes:
       # - ./headscale/config:/etc/headscale
       # - ./headscale/data:/var/lib/headscale
-      - ./headscale/config:/etc/headscale
+      - ./headscale:/etc/headscale
       - headscale_data:/var/lib/headscale
     command: serve
-    networks:
-      headscale-proxied_default:
-  
+    networks: caddy_nw
+
   headscale-ui:
     container_name: headscale-ui
     image: ghcr.io/gurucomputing/headscale-ui:latest
     restart: unless-stopped
-    networks:
-      headscale-proxied_default:
+    networks: caddy_nw
 
   caddy:
     image: caddy
@@ -28,7 +26,7 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      - headscale-proxied_default
+      - caddy_nw
     volumes:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
@@ -40,5 +38,5 @@ volumes:
   headscale_data:
 
 networks:
-  headscale-proxied_default:
-    external: true
+  caddy_nw:
+    # internal: true
