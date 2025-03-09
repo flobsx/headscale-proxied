@@ -5,5 +5,6 @@ https://hs.stanne.bsx.pm {
             read_buffer 8192
         }
     }
+    redir /admin /admin/
     tls flobsx@gmail.com
 }
