@@ -7,33 +7,12 @@ services:
       #- "0.0.0.0:8080:8080"
       - "127.0.0.1:9090:9090"
     volumes:
-      # - ./headscale/config:/etc/headscale
-      # - ./headscale/data:/var/lib/headscale
       - ./headscale:/etc/headscale:ro
       - headscale_data:/var/lib/headscale:rw
     command: serve
     networks:
       - caddy_nw
 
-  # headscale-ui:
-  #   container_name: headscale-ui
-  #   image: ghcr.io/gurucomputing/headscale-ui:latest
-  #   restart: unless-stopped
-  #   networks:
-  #     - caddy_nw
-
-  # headplane:
-  #   image: ghcr.io/tale/headplane:0.5.1
-  #   container_name: headplane
-  #   restart: unless-stopped
-  #   # ports:
-  #   #   - '3000:3000'
-  #   volumes:
-  #     - ./headplane/config.yaml:/etc/headplane/config.yaml
-  #     - ./headscale:/etc/headscale:ro
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  #   networks:
-  #     - caddy_nw
   headscale-admin:
     image: goodieshq/headscale-admin:0.24
     container_name: headscale-admin
