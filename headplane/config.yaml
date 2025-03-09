@@ -81,7 +81,7 @@ oidc:
   # that can be used to authenticate other sessions when signing in.
   #
   # This can be done with `headscale apikeys create --expiration 999d`
-  headscale_api_key: "_LdGTF-.dHfnKcSgqlDemJhKFY9Ho5nW7ljkQ1Gd"
+  headscale_api_key: "DPv1acp.HdMD7ka5p63YnF8Lgfb4la-UzGeCrIVm"
 
   # Optional, but highly recommended otherwise Headplane
   # will attempt to automatically guess this from the issuer
