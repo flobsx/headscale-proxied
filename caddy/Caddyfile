@@ -1,5 +1,5 @@
 https://hs.stanne.bsx.pm {
-    reverse_proxy /admin* http://headplane:3000
+    reverse_proxy /admin* http://headplane:80
     reverse_proxy * http://headscale:8080 {
         transport http {
             read_buffer 8192

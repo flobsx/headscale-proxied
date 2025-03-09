@@ -22,16 +22,22 @@ services:
   #   networks:
   #     - caddy_nw
 
-  headplane:
-    image: ghcr.io/tale/headplane:0.5.1
-    container_name: headplane
+  # headplane:
+  #   image: ghcr.io/tale/headplane:0.5.1
+  #   container_name: headplane
+  #   restart: unless-stopped
+  #   # ports:
+  #   #   - '3000:3000'
+  #   volumes:
+  #     - ./headplane/config.yaml:/etc/headplane/config.yaml
+  #     - ./headscale:/etc/headscale:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #   networks:
+  #     - caddy_nw
+  headscale-admin:
+    image: goodieshq/headscale-admin:0.24
+    container_name: headscale-admin
     restart: unless-stopped
-    # ports:
-    #   - '3000:3000'
-    volumes:
-      - ./headplane/config.yaml:/etc/headplane/config.yaml
-      - ./headscale:/etc/headscale:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - caddy_nw
 
