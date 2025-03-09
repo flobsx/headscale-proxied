@@ -9,7 +9,6 @@ services:
     volumes:
       - ./headscale/config:/etc/headscale
   #     - ./headscale/data:/var/lib/headscale # Data persistence
-      - caddy_data:/etc
     command: serve
     networks:
       headscale-proxied_default:
@@ -35,8 +34,4 @@ services:
 
 networks:
   headscale-proxied_default:
-    external: true
-
-volumes:
-  caddy_data:
     external: true
