@@ -9,8 +9,8 @@ services:
     volumes:
       # - ./headscale/config:/etc/headscale
       # - ./headscale/data:/var/lib/headscale
-      - ./headscale:/etc/headscale
-      - headscale_data:/var/lib/headscale
+      - ./headscale:/etc/headscale:ro
+      - headscale_data:/var/lib/headscale:rw
     command: serve
     networks:
       - caddy_nw
