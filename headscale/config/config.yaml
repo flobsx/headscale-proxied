@@ -272,12 +272,12 @@ dns:
   # `base_domain` must be a FQDN, without the trailing dot.
   # The FQDN of the hosts will be
   # `hostname.base_domain` (e.g., _myhost.example.com_).
-  base_domain: example.com
+  base_domain: hs.stanne.bsx.pm
 
   # List of DNS servers to expose to clients.
   nameservers:
     global:
-      - 192.168.10.3
+      # - 192.168.10.3
       - 1.1.1.1
       - 1.0.0.1
       - 2606:4700:4700::1111
