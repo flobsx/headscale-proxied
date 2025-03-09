@@ -6,6 +6,8 @@ services:
     ports:
       #- "0.0.0.0:8080:8080"
       - "127.0.0.1:9090:9090"
+    environment:
+      - TZ=Europe/Paris
     volumes:
       - ./headscale:/etc/headscale:ro
       - headscale_data:/var/lib/headscale:rw
