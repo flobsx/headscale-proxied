@@ -8,7 +8,7 @@ services:
       - "127.0.0.1:9090:9090"
     volumes:
       - ./headscale/config:/etc/headscale
-  #     - ./headscale/data:/var/lib/headscale # Data persistence
+      - ./headscale/data:/var/lib/headscale # Data persistence
     command: serve
     networks:
       headscale-proxied_default:
