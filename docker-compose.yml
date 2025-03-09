@@ -33,6 +33,7 @@ services:
       DB_MYSQL_NAME: "npm"
     volumes:
       - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
     depends_on:
       - db
     networks:
