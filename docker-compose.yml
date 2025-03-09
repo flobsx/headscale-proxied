@@ -8,8 +8,8 @@ services:
     expose:
       - "8080"
     volumes:
-      - ./config:/etc/headscale/  # Configuration files
-      - ./data:/var/lib/headscale # Data persistence
+      - ./headscale/config:/etc/headscale  # Configuration files
+      - ./headscale/data:/var/lib/headscale # Data persistence
     command: serve
     networks:
       - proxied
@@ -32,8 +32,8 @@ services:
       DB_MYSQL_PASSWORD: "npm"
       DB_MYSQL_NAME: "npm"
     volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - ./nginx-proxy-manager/data:/data
+      - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt
     depends_on:
       - db
     networks:
@@ -49,7 +49,7 @@ services:
       MYSQL_USER: 'npm'
       MYSQL_PASSWORD: 'npm'
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./nginx-proxy-manager/mysql:/var/lib/mysql
     networks:
       - proxied
 
