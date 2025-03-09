@@ -28,9 +28,13 @@ services:
     networks:
       - headscale-proxied_default
     volumes:
-      - ./caddy/data/:/data/
-      - ./caddy/config/:/config/
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
 
 networks:
   headscale-proxied_default:
