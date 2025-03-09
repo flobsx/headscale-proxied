@@ -12,14 +12,14 @@ services:
       - caddy_data:/etc
     command: serve
     networks:
-      reverseproxy-nw:
+      caddy-net:
   
   headscale-ui:
     container_name: headscale-ui
     image: ghcr.io/gurucomputing/headscale-ui:latest
     restart: unless-stopped
     networks:
-      reverseproxy-nw:
+      caddy-net:
 
   caddy:
     image: caddy
@@ -34,7 +34,7 @@ services:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile
 
 networks:
-  reverseproxy-nw:
+  caddy-net:
     external: true
 
 volumes:
