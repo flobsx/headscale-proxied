@@ -1,0 +1,58 @@
+services:
+  headscale:
+    image: headscale/headscale:0.25.1
+    restart: unless-stopped
+    container_name: headscale
+    ports:
+      - "9090:9090"
+    expose:
+      - "8080"
+    volumes:
+      - ./config:/etc/headscale/  # Configuration files
+      - ./data:/var/lib/headscale # Data persistence
+    command: serve
+    networks:
+      - proxied
+    depends_on:
+      - nginx-proxy-manager
+
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'    # Public HTTP Port
+      - '443:443'  # Public HTTPS Port
+      - '81:81'    # Admin Web Port
+    #expose:
+    #  - "81"
+    environment:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "npm"
+      DB_MYSQL_NAME: "npm"
+    volumes:
+      - ./data:/data
+    depends_on:
+      - db
+    networks:
+      - proxied
+      - default
+
+  db:
+    image: 'jc21/mariadb-aria:latest'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'npm'
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - proxied
+
+networks:
+  proxied:
+    name: proxied
+    external: true

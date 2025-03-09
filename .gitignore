@@ -1,0 +1,4 @@
+.env
+nginx-proxy-manager/data
+nginx-proxy-manager/db
+headscale/data
