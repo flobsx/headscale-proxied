@@ -1,20 +1,25 @@
 services:
-  # headscale:
-  #   image: headscale/headscale:0.25.1
-  #   restart: unless-stopped
-  #   container_name: headscale
-  #   ports:
-  #     - "9090:9090"
-  #   expose:
-  #     - "8080"
-  #   volumes:
-  #     - ./headscale/config:/etc/headscale  # Configuration files
+  headscale:
+    image: headscale/headscale:0.25.1
+    restart: unless-stopped
+    container_name: headscale
+    ports:
+      #- "0.0.0.0:8080:8080"
+      - "127.0.0.1:9090:9090"
+    volumes:
+      - ./headscale/config:/etc/headscale
   #     - ./headscale/data:/var/lib/headscale # Data persistence
-  #   command: serve
-  #   networks:
-  #     - headscale-proxied_default
-  #   depends_on:
-  #     - nginx-proxy-manager
+      - caddy_data:/etc
+    command: serve
+    networks:
+      reverseproxy-nw:
+  
+  headscale-ui:
+    container_name: headscale-ui
+    image: ghcr.io/gurucomputing/headscale-ui:latest
+    restart: unless-stopped
+    networks:
+      reverseproxy-nw:
 
   caddy:
     image: caddy
@@ -27,3 +32,11 @@ services:
       - ./caddy/data/:/data/
       - ./caddy/config/:/config/
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+
+networks:
+  reverseproxy-nw:
+    external: true
+
+volumes:
+  caddy_data:
+    external: true
