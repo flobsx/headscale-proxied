@@ -12,14 +12,14 @@ services:
       - caddy_data:/etc
     command: serve
     networks:
-      caddy-net:
+      headscale-proxied_default:
   
   headscale-ui:
     container_name: headscale-ui
     image: ghcr.io/gurucomputing/headscale-ui:latest
     restart: unless-stopped
     networks:
-      caddy-net:
+      headscale-proxied_default:
 
   caddy:
     image: caddy
@@ -27,14 +27,14 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      - caddy-net
+      - headscale-proxied_default
     volumes:
       - ./caddy/data/:/data/
       - ./caddy/config/:/config/
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile
 
 networks:
-  caddy-net:
+  headscale-proxied_default:
     external: true
 
 volumes:
