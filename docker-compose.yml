@@ -41,8 +41,8 @@ services:
     image: authelia/authelia
     container_name: authelia
     volumes:
-      - ./authelia:/config:ro
-      - ./secrets:/config/secrets:ro
+      - ./authelia:/config
+      - ./secrets:/config/secrets
     restart: unless-stopped
     healthcheck:
       ## In production the healthcheck section should be commented.
