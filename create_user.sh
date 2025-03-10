@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 # Fonction pour vérifier si une chaîne est une clé YAML valide
 is_valid_yaml_key() {
@@ -97,8 +97,8 @@ chmod 644 authelia/users_database.yml
 
 echo "✅ Utilisateur ajouté avec succès dans authelia/users_database.yml"
 
-# Redémarre le conteneur Docker Authelia
-echo "Redémarrage du conteneur Docker Authelia..."
-docker compose restart authelia
-
-echo "✅ Conteneur Docker Authelia redémarré avec succès."
+if [ "$(docker-compose ps -q authelia)" ]; then
+  echo "Redémarrage du conteneur Docker Authelia..."
+  docker compose restart authelia
+  echo "✅ Conteneur Docker Authelia redémarré avec succès."
+fi
