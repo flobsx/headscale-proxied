@@ -1,0 +1,56 @@
+# Miscellaneous https://www.authelia.com/configuration/miscellaneous/introduction/
+# Set also AUTHELIA_JWT_SECRET_FILE
+theme: auto
+default_redirection_url: https://auth.hs.stanne.bsx.pm/ # Change me!
+
+# First Factor https://www.authelia.com/configuration/first-factor/file/
+authentication_backend:
+  file:
+    path: /config/users_database.yml
+
+# Second Factor https://www.authelia.com/configuration/second-factor/introduction/
+totp:
+  issuer: hs.stanne.bsx.pm
+
+# Security https://www.authelia.com/configuration/security/access-control/
+access_control:
+  default_policy: two_factor
+
+server:
+  endpoints:
+    authz:
+      forward-auth:
+        implementation: "ForwardAuth"
+
+# Session https://www.authelia.com/configuration/session/introduction/
+# Set also AUTHELIA_SESSION_SECRET_FILE
+session:
+  domain: hs.stanne.bsx.pm
+
+  # https://www.authelia.com/configuration/session/redis/
+  # Set also AUTHELIA_SESSION_REDIS_PASSWORD_FILE if appropriate
+  redis:
+    host: redis
+    port: 6379
+
+  cookies:
+    - domain: "hs.stanne.bsx.pm"
+      authelia_url: "https://auth.hs.stanne.bsx.pm"
+      default_redirection_url: "https://admin.hs.stanne.bsx.pm"
+
+# Storage https://www.authelia.com/configuration/storage/postgres/
+# Set also AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE
+# Set also AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE
+storage:
+  postgres:
+    host: database
+    database: authelia
+    username: authelia
+# SMTP Notifier https://www.authelia.com/configuration/notifications/smtp/
+# Set also AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE
+# notifier:
+#   smtp:
+#     host: smtp.example.com # Change me!
+#     port: 465 # Change me!
+#     username: you@example.com # Change me!
+#     sender: "Authelia <authelia@example.com>" # Change me!
